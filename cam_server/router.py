@@ -43,12 +43,15 @@ def kill():
     global p1, p2
     if p2 is not None:
         p2.kill()
+        p2 = None
 
     if p1 is not None:
         p1.kill()
+        p1 = None
 
     dir_path = "/usr/app/hls"
     if os.path.exists(dir_path):
+        # sudo 권한으로 python을 실행시켜야 삭제 가능
         shutil.rmtree(dir_path)
 
     os.makedirs(dir_path)

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd ..
-.venv/bin/python ./main.py
+sudo .venv/bin/python ./main.py
