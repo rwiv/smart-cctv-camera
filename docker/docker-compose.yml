@@ -1,0 +1,9 @@
+services:
+  nginx:
+    image: nginx:1.25.4
+    container_name: nginx
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /usr/app:/usr/app
