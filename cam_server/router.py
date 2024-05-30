@@ -1,4 +1,6 @@
 import asyncio
+import os
+import shutil
 import subprocess
 
 from cam_server.exec import exec_camera
@@ -21,7 +23,7 @@ def index() -> str:
 
 
 @router.get("/start")
-def index(t: int = Query(20)) -> str:
+async def start(t: int = Query(20)) -> str:
     global p1, p2
     if p1 is not None or p2 is not None:
         raise HTTPException(status_code=400, detail="already started")
@@ -32,7 +34,7 @@ def index(t: int = Query(20)) -> str:
 
 
 @router.get("/stop")
-def index() -> str:
+def stop() -> str:
     kill()
     return "end"
 
@@ -44,3 +46,9 @@ def kill():
 
     if p1 is not None:
         p1.kill()
+
+    dir_path = "/usr/app/hls"
+    if os.path.exists(dir_path):
+        shutil.rmtree(dir_path)
+
+    os.makedirs(dir_path)
