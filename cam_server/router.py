@@ -2,7 +2,7 @@ import subprocess
 import time
 
 from cam_server.exec import exec_camera
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 router = APIRouter()
 
@@ -16,22 +16,24 @@ def index() -> str:
 
 
 @router.get("/start")
-def index() -> str:
+def index(t: int = Query(20)) -> str:
+    global p1, p2
     p1, p2 = exec_camera()
-    time.sleep(20)
+    time.sleep(t)
     kill()
     return "end"
 
 
-@router.get("/end")
+@router.get("/stop")
 def index() -> str:
     kill()
     return "end"
 
 
 def kill():
-    if p1 is not None:
-        p1.kill()
-
+    global p1, p2
     if p2 is not None:
         p2.kill()
+
+    if p1 is not None:
+        p1.kill()
