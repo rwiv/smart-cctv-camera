@@ -5,6 +5,9 @@ cd ..
 file=./docker/docker-compose-nodered.yml
 
 if [ "$1" = "up" ]; then
+  sudo mkdir ./docker/data -p
+  sudo chmod 777 ./docker/data
+
   sudo docker compose -f $file up -d
 elif [ "$1" = "stop" ]; then
   sudo docker compose -f $file stop
