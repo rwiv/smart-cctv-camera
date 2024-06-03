@@ -10,5 +10,5 @@ elif [ "$1" = "stop" ]; then
   sudo docker compose -f $file stop
 elif [ "$1" = "rm" ]; then
   sudo docker compose -f $file stop
-  echo y | sudo docker compose -f $file stop
+  echo y | sudo docker compose -f $file rm
 fi
