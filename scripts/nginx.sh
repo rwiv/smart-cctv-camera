@@ -8,4 +8,4 @@ else
   cmd="$1"
 fi
 
-sudo docker compose -f ./docker/docker-compose-nginx.yml $cmd -d
+sudo docker compose -f ./docker/docker-compose-nginx.yml $cmd
