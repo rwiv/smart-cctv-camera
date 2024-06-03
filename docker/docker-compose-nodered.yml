@@ -1,0 +1,9 @@
+services:
+  node-red:
+    image: nodered/node-red
+    container_name: node-red
+    entrypoint: /usr/src/node-red/entrypoint.sh
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./data:/data
