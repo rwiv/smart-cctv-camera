@@ -62,6 +62,7 @@ def kill():
         p1.kill()
         p1 = None
 
-    now = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-    # sudo 권한 필요
-    os.rename(live_path, hls_path + "/" + now)
+    if os.path.exists(live_path):
+        now = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+        # sudo 권한 필요
+        os.rename(live_path, hls_path + "/" + now)
