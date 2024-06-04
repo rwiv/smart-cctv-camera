@@ -24,6 +24,13 @@ def index() -> str:
     return "hello"
 
 
+@router.get("/records")
+def records() -> list[str]:
+    entries = os.listdir(hls_path)
+    files = [entry for entry in entries if os.path.isdir(os.path.join(hls_path, entry))]
+    return files
+
+
 @router.get("/start")
 async def start(t: int = Query(20)) -> str:
     # sudo 권한 필요
