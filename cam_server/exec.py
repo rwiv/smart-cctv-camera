@@ -41,8 +41,8 @@ def exec_camera() -> tuple[subprocess.Popen[bytes], subprocess.Popen[bytes]]:
     return p1, p2
 
 
-def write_thumbnail(src: str, dest: str):
-    subprocess.run([
+def write_thumbnail(src: str, dest: str) -> subprocess.CompletedProcess[bytes]:
+    return subprocess.run([
         "sudo", find_command_path("ffmpeg"),
         "-i", src, "-ss", "00:00:00.000", "-vframes", "1", dest
     ], stdout=subprocess.PIPE)
