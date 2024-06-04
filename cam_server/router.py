@@ -1,8 +1,10 @@
 import asyncio
 import os
-import shutil
+import stat
 import subprocess
+from datetime import datetime
 
+from cam_server.configs import hls_path, live_path
 from cam_server.exec import exec_camera
 from fastapi import APIRouter, Query, HTTPException
 
@@ -24,6 +26,10 @@ def index() -> str:
 
 @router.get("/start")
 async def start(t: int = Query(20)) -> str:
+    # sudo 권한 필요
+    os.makedirs(live_path, exist_ok=True)
+    os.chmod(live_path, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+
     global p1, p2
     if p1 is not None or p2 is not None:
         raise HTTPException(status_code=400, detail="already started")
@@ -49,9 +55,6 @@ def kill():
         p1.kill()
         p1 = None
 
-    dir_path = "/usr/app/hls"
-    if os.path.exists(dir_path):
-        # sudo 권한으로 python을 실행시켜야 삭제 가능
-        shutil.rmtree(dir_path)
-
-    os.makedirs(dir_path)
+    now = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+    # sudo 권한 필요
+    os.rename(live_path, hls_path + "/" + now)
