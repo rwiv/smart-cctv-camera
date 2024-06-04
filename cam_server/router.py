@@ -5,11 +5,11 @@ import subprocess
 from datetime import datetime
 from os import path
 
-from cam_server.configs import hls_path, live_path
-from cam_server.exec import exec_camera
 from fastapi import APIRouter, Query, HTTPException
 
-from cam_server.hls import create_m3u8, write_m3u8
+from cam_server.configs import hls_path, live_path
+from cam_server.exec import exec_camera, write_thumbnail
+from cam_server.hls import write_m3u8
 
 router = APIRouter()
 
@@ -65,11 +65,15 @@ def kill():
         p1.kill()
         p1 = None
 
+    # sudo 권한 필요
     if os.path.exists(live_path):
         m3u8_path = path.join(live_path, "index.m3u8")
         os.remove(m3u8_path)
         write_m3u8(m3u8_path)
 
+        src_path = path.join(live_path, "index0.ts")
+        dest_path = path.join(live_path, "thumb.jpg")
+        write_thumbnail(src_path, dest_path)
+
         now = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-        # sudo 권한 필요
         os.rename(live_path, path.join(hls_path, now))

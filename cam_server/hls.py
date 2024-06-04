@@ -21,6 +21,7 @@ def create_m3u8(filenames: list[str]):
 def write_m3u8(m3u8_path: str):
     entries = os.listdir(live_path)
     files = [entry for entry in entries if entry.endswith(".ts")]
+    files.sort()
     m3u8 = create_m3u8(files)
     with open(m3u8_path, "w") as file:
         file.write(m3u8)
