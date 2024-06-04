@@ -33,7 +33,7 @@ def exec_camera() -> tuple[subprocess.Popen[bytes], subprocess.Popen[bytes]]:
         'sudo', find_command_path("ffmpeg"),
         '-i', '-', '-vcodec', 'copy', '-g', '60',
         '-preset', 'fast', '-f', 'hls', '-hls_time', '2', '-hls_list_size', '4',
-        '-hls_flags', 'delete_segments+append_list+independent_segments',
+        '-hls_flags', 'append_list+independent_segments',
         '-y', m3u8_path,
     ], stdin=p1.stdout)
 
