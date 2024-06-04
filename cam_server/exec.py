@@ -1,5 +1,6 @@
 import subprocess
 import platform
+from os import path
 
 from cam_server.configs import live_path
 
@@ -28,7 +29,7 @@ def exec_camera() -> tuple[subprocess.Popen[bytes], subprocess.Popen[bytes]]:
         '--codec', 'h264', '-o', '-'
     ], stdout=subprocess.PIPE)
 
-    m3u8_path = live_path + "/index.m3u8"
+    m3u8_path = path.join(live_path, "index.m3u8")
     p2 = subprocess.Popen([
         'sudo', find_command_path("ffmpeg"),
         '-i', '-', '-vcodec', 'copy', '-g', '60',
