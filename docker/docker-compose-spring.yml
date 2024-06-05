@@ -1,0 +1,11 @@
+services:
+  smart-cctv:
+    image: ghcr.io/rwiv/smart-cctv:latest
+    container_name: smart-cctv
+    environment:
+      secret.account.admin.username: "${ADMIN_USERNAME}"
+      secret.account.admin.password: "${ADMIN_PASSWORD}"
+      secret.address.cam.api: "${CAM_API_ADDR}"
+      secret.address.cam.nginx: "${CAM_NGINX_ADDR}"
+    ports:
+      - "8080:8080"
